@@ -62,6 +62,8 @@ module.exports = class ChaplinGenerator extends yeoman.generators.Base
       @copy "#{spath}/app/routes.coffee", 'app/routes.coffee'
       @copy "#{spath}/app/controllers/_home.coffee", "app/controllers/home#{@controllerSuffix}.coffee"
       @copy "#{spath}/app/styles/application.styl", 'app/styles/application.styl'
+      @copy "#{spath}/app/styles/base.styl", 'app/styles/base.styl'
+      @copy "#{spath}/app/styles/modules/footer.styl", 'app/styles/modules/footer.styl'
       @copy "#{spath}/app/templates/footer.hbs", 'app/templates/footer.hbs'
       @copy "#{spath}/app/templates/header.hbs", 'app/templates/header.hbs'
       @copy "#{spath}/app/templates/home.hbs", 'app/templates/home.hbs'

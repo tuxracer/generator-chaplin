@@ -125,6 +125,8 @@ module.exports = (grunt) ->
         options:
           compress: false
           paths: ['app/css']
+          define:
+            import_tree: require 'stylus-import-tree'
         files:
           'tmp/css/app.css': 'app/styles/application.styl'
 

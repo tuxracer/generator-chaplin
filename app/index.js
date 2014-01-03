@@ -47,15 +47,6 @@ ChaplinGenerator.prototype.askFor = function askFor() {
         {
           name: 'controllerSuffix',
           message: 'Controller suffix (leave this blank if you dont want one)'
-        },
-        {
-          name: 'skeleton',
-          message: "Please enter the number next to the skeleton you would like \
-          \n[0] Barebones (minimum to get started) \
-          \n[1] HTML 5 Boilerplate \
-          \n[2] Twitter Bootstrap \
-          \nSelection: \
-          "
         }
       ];
 
@@ -68,14 +59,6 @@ ChaplinGenerator.prototype.askFor = function askFor() {
 
         else {
           this.controllerSuffix = '';
-        }
-
-        if(typeof props.skeleton == null) {
-          this.skeleton = 0;
-        }
-
-        else {
-          this.skeleton = parseInt(props.skeleton);
         }
 
         cb();
@@ -114,89 +97,28 @@ ChaplinGenerator.prototype.app = function app() {
   this.template('_package.json', 'package.json');
   this.copy('server.coffee', 'server.coffee');
 
-  var path;
+  var path = '../skeletons/bootstrap3';
 
-  switch(this.skeleton) {
+  this.template(path + '/_bower.json',                      'bower.json');
+  this.copy(path + '/app/assets/index.hbs',                 'app/assets/index.hbs');
+  this.copy(path + '/Gruntfile.coffee',                     'Gruntfile.coffee');
+  this.template(path + '/app/_initialize.coffee',           'app/initialize.coffee');
+  this.copy(path + '/app/application.coffee',               'app/application.coffee');
+  this.copy(path + '/app/mediator.coffee',                  'app/mediator.coffee');
+  this.copy(path + '/app/routes.coffee',                    'app/routes.coffee');
+  this.copy(path + '/app/controllers/_home.coffee',         'app/controllers/home' + this.controllerSuffix + '.coffee')
+  this.copy(path + '/app/styles/application.styl',          'app/styles/application.styl')
+  this.copy(path + '/app/templates/footer.hbs',             'app/templates/footer.hbs')
+  this.copy(path + '/app/templates/header.hbs',             'app/templates/header.hbs')
+  this.copy(path + '/app/templates/home.hbs',               'app/templates/home.hbs')
+  this.copy(path + '/app/templates/jumbotron.hbs',          'app/templates/jumbotron.hbs')
+  this.copy(path + '/app/templates/site.hbs',               'app/templates/site.hbs')
+  this.copy(path + '/app/views/bootstrap/jumbotron.coffee', 'app/views/bootstrap/jumbotron.coffee')
+  this.copy(path + '/app/views/footer.coffee',              'app/views/footer.coffee')
+  this.copy(path + '/app/views/header.coffee',              'app/views/header.coffee')
+  this.copy(path + '/app/views/home/home-page.coffee',      'app/views/home/home-page.coffee')
+  this.copy(path + '/app/views/site-view.coffee',           'app/views/site-view.coffee')
 
-    // HTML5 Boilerplate
-    case 1: {
-      path = '../skeletons/html5bp';
-
-      this.template(path + '/_bower.json',                                     'bower.json');
-      this.copy(path + '/Gruntfile.coffee',                                    'Gruntfile.coffee');
-      this.template(path + '/app/_initialize.coffee',                          'app/initialize.coffee');
-      this.copy(path + '/app/application.coffee',                              'app/application.coffee');
-      this.copy(path + '/app/mediator.coffee',                                 'app/mediator.coffee');
-      this.copy(path + '/app/routes.coffee',                                   'app/routes.coffee');
-      this.copy(path + '/app/assets/apple-touch-icon-114x114-precomposed.png', 'app/assets/apple-touch-icon-114x114-precomposed.png');
-      this.copy(path + '/app/assets/apple-touch-icon-144x144-precomposed.png', 'app/assets/apple-touch-icon-144x144-precomposed.png');
-      this.copy(path + '/app/assets/apple-touch-icon-57x57-precomposed.png',   'app/assets/apple-touch-icon-57x57-precomposed.png');
-      this.copy(path + '/app/assets/apple-touch-icon-72x72-precomposed.png',   'app/assets/apple-touch-icon-72x72-precomposed.png');
-      this.copy(path + '/app/assets/apple-touch-icon-precomposed.png',         'app/assets/apple-touch-icon-precomposed.png');
-      this.copy(path + '/app/assets/apple-touch-icon.png',                     'app/assets/apple-touch-icon.png');
-      this.copy(path + '/app/assets/favicon.ico',                              'app/assets/favicon.ico');
-      this.copy(path + '/app/assets/index.hbs',                                'app/assets/index.hbs');
-      this.copy(path + '/app/controllers/_home.coffee',                        'app/controllers/home' + this.controllerSuffix + '.coffee')
-      this.copy(path + '/app/styles/application.styl',                         'app/styles/application.styl')
-      this.copy(path + '/app/templates/home.hbs',                              'app/templates/home.hbs')
-      this.copy(path + '/app/templates/site.hbs',                              'app/templates/site.hbs')
-      this.copy(path + '/app/views/home/home-page.coffee',                     'app/views/home/home-page.coffee')
-      this.copy(path + '/app/views/site-view.coffee',                          'app/views/site-view.coffee')
-      this.copy(path + '/vendor/main.css',                                     'vendor/main.css')
-      this.copy(path + '/vendor/normalize.css',                                'vendor/normalize.css')
-      this.copy(path + '/vendor/modernizr-2.6.2.min.js',                       'vendor/modernizr-2.6.2.min.js')
-
-      break;
-    }
-
-    // Twitter Bootstrap
-    case 2: {
-      path = '../skeletons/bootstrap3';
-
-      this.template(path + '/_bower.json',                      'bower.json');
-      this.copy(path + '/app/assets/index.hbs',                 'app/assets/index.hbs');
-      this.copy(path + '/Gruntfile.coffee',                     'Gruntfile.coffee');
-      this.template(path + '/app/_initialize.coffee',           'app/initialize.coffee');
-      this.copy(path + '/app/application.coffee',               'app/application.coffee');
-      this.copy(path + '/app/mediator.coffee',                  'app/mediator.coffee');
-      this.copy(path + '/app/routes.coffee',                    'app/routes.coffee');
-      this.copy(path + '/app/controllers/_home.coffee',         'app/controllers/home' + this.controllerSuffix + '.coffee')
-      this.copy(path + '/app/styles/application.styl',          'app/styles/application.styl')
-      this.copy(path + '/app/templates/footer.hbs',             'app/templates/footer.hbs')
-      this.copy(path + '/app/templates/header.hbs',             'app/templates/header.hbs')
-      this.copy(path + '/app/templates/home.hbs',               'app/templates/home.hbs')
-      this.copy(path + '/app/templates/jumbotron.hbs',          'app/templates/jumbotron.hbs')
-      this.copy(path + '/app/templates/site.hbs',               'app/templates/site.hbs')
-      this.copy(path + '/app/views/bootstrap/jumbotron.coffee', 'app/views/bootstrap/jumbotron.coffee')
-      this.copy(path + '/app/views/footer.coffee',              'app/views/footer.coffee')
-      this.copy(path + '/app/views/header.coffee',              'app/views/header.coffee')
-      this.copy(path + '/app/views/home/home-page.coffee',      'app/views/home/home-page.coffee')
-      this.copy(path + '/app/views/site-view.coffee',           'app/views/site-view.coffee')
-
-      break;
-    }
-
-    // Barebones
-    default: {
-      path = '../skeletons/barebones';
-
-      this.template(path + '/_bower.json',                      'bower.json');
-      this.copy(path + '/app/assets/index.hbs',                 'app/assets/index.hbs');
-      this.copy(path + '/Gruntfile.coffee',                     'Gruntfile.coffee');
-      this.template(path + '/app/_initialize.coffee',           'app/initialize.coffee');
-      this.copy(path + '/app/application.coffee',               'app/application.coffee');
-      this.copy(path + '/app/mediator.coffee',                  'app/mediator.coffee');
-      this.copy(path + '/app/routes.coffee',                    'app/routes.coffee');
-      this.copy(path + '/app/controllers/_home.coffee',         'app/controllers/home' + this.controllerSuffix + '.coffee')
-      this.copy(path + '/app/styles/application.styl',          'app/styles/application.styl')
-      this.copy(path + '/app/templates/header.hbs',             'app/templates/header.hbs')
-      this.copy(path + '/app/templates/home.hbs',               'app/templates/home.hbs')
-      this.copy(path + '/app/templates/site.hbs',               'app/templates/site.hbs')
-      this.copy(path + '/app/views/site-view.coffee',           'app/views/site-view.coffee')
-      this.copy(path + '/app/views/home/header-view.coffee',    'app/views/home/header-view.coffee')
-      this.copy(path + '/app/views/home/home-page-view.coffee', 'app/views/home/home-page-view.coffee')
-    }
-  }
 
   var _this = this;
 

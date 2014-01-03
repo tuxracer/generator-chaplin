@@ -1,6 +1,6 @@
 {
-  "name": "generator-chaplin",
-  "version": "0.1.3",
+  "name": "generator-chaplin-alt",
+  "version": "0.2.0",
   "description": "Chaplin generator for Yeoman",
   "keywords": [
     "yeoman-generator"
@@ -8,11 +8,16 @@
   "homepage": "https://github.com/chrisabrams/generator-chaplin",
   "bugs": "https://github.com/chrisabrams/generator-chaplin/issues",
   "author": {
-    "name": "Chris Abrams",
-    "email": "mail@chrisabrams.com",
-    "url": "https://github.com/chrisabrams"
+    "name": "Derek Petersen",
+    "email": "tuxracer@gmail.com",
+    "url": "https://github.com/tuxracer"
   },
   "contributors": [
+    {
+      "name": "Chris Abrams",
+      "email": "mail@chrisabrams.com",
+      "url": "https://github.com/chrisabrams"
+    },
     {
       "name": "Samuel Hough",
       "url": "https://github.com/samuelhough"
@@ -21,7 +26,7 @@
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/chrisabrams/generator-chaplin.git"
+    "url": "git://github.com/tuxracer/generator-chaplin.git"
   },
   "scripts": {
     "test": "mocha"

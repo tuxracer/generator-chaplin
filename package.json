@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "yeoman-generator": "~0.13.0",
-    "lodash": "~2.2.1"
+    "lodash": "~2.2.1",
+    "coffee-script": "~1.6.3"
   },
   "devDependencies": {
     "mocha": "1.16.1"

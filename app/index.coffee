@@ -35,8 +35,6 @@ module.exports = class ChaplinGenerator extends yeoman.generators.Base
 
   app: ->
     unless @exists
-      @copy 'editorconfig', '.editorconfig'
-      @copy 'jshintrc', '.jshintrc'
       @mkdir 'app'
       @mkdir 'app/assets'
       @mkdir 'app/assets/fonts'
@@ -54,7 +52,7 @@ module.exports = class ChaplinGenerator extends yeoman.generators.Base
       @copy 'server.coffee', 'server.coffee'
       spath = '../skeletons/bootstrap3'
       @template "#{spath}/_bower.json", 'bower.json'
-      @copy "#{spath}/app/assets/index.hbs", 'app/assets/index.hbs'
+      @template "#{spath}/app/assets/_index.hbs", 'app/assets/index.hbs'
       @copy "#{spath}/Gruntfile.coffee", 'Gruntfile.coffee'
       @template "#{spath}/app/_initialize.coffee", 'app/initialize.coffee'
       @copy "#{spath}/app/application.coffee", 'app/application.coffee'

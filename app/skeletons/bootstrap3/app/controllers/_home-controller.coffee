@@ -1,8 +1,8 @@
 Controller = require './base/controller'
-FooterView = require '../views/footer'
-HeaderView = require '../views/header'
-HomePageView = require '../views/home/home-page'
-JumbotronView = require '../views/bootstrap/jumbotron'
+FooterView = require '../views/footer-view'
+HeaderView = require '../views/header-view'
+HomePageView = require '../views/home/home-page-view'
+JumbotronView = require '../views/bootstrap/jumbotron-view'
 
 module.exports = class HomeController extends Controller
 

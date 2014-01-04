@@ -22,12 +22,12 @@ module.exports = helpers =
         if type is 'template'
           @copy 'index.hbs', "app/templates/#{@path}/#{name}.hbs"
         else
-          @template "_#{type}.coffee", "app/#{pathType}s/#{@path}/#{name}.coffee"
+          @template "_#{type}.coffee", "app/#{pathType}s/#{@path}/#{name}-#{type}.coffee"
       else
         if type is 'template'
           @copy 'index.hbs', "app/templates/#{name}.hbs"
         else
-          @template "_#{type}.coffee", "app/#{pathType}s/#{name}.coffee"
+          @template "_#{type}.coffee", "app/#{pathType}s/#{name}-#{type}.coffee"
 
   generators:
     nameAndPath: ->

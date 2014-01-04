@@ -41,16 +41,9 @@ module.exports = class ChaplinGenerator extends yeoman.generators.Base
     prompts = [
       name: 'appName'
       message: 'Application name'
-    ,
-      name: 'controllerSuffix'
-      message: 'Controller suffix (leave this blank if you dont want one)'
     ]
-    @prompt prompts, (props) =>
+    @prompt prompts, (props) ->
       @appName = props.appName
-      if typeof props.controllerSuffix is 'string' and props.controllerSuffix.length > 0
-        @controllerSuffix = props.controllerSuffix
-      else
-        @controllerSuffix = ''
       cb()
 
   app: ->

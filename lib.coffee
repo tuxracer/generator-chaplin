@@ -13,8 +13,8 @@ module.exports = helpers =
       switch type
         when 'collection'
           pathType = 'model'
-        when 'view'
-          pathType = 'collectionview'
+        when 'collectionview'
+          pathType = 'view'
         else
           pathType = type
 

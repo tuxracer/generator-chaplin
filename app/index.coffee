@@ -4,6 +4,26 @@ fs = require 'fs'
 util = require 'util'
 glob = require 'glob'
 
+isTemplate = (filepath) ->
+  path
+  .basename(filepath)
+  .match(/^_/)
+
+# Converts foo/bar/_blah.txt to foo/bar/blah.txt
+getDest = (filepath) ->
+  filepath = filepath
+  .replace(__dirname, '')
+  .replace('skeletons/bootstrap3/', '')
+  .replace(/^\/templates/, '')
+  .substr(1)
+
+  filename = if isTemplate(filepath) then path.basename(filepath).substr(1) else path.basename(filepath)
+
+  filedir = path
+  .dirname(filepath)
+
+  path.join filedir, filename
+
 module.exports = class ChaplinGenerator extends yeoman.generators.Base
   constructor: (args, options, config) ->
     yeoman.generators.Base.apply this, arguments
@@ -47,36 +67,17 @@ module.exports = class ChaplinGenerator extends yeoman.generators.Base
       @mkdir 'app/views'
       @mkdir 'test'
       @mkdir 'vendor'
-      @template '_config.json', 'config.json'
-      @template '_package.json', 'package.json'
-      @copy 'server.coffee', 'server.coffee'
-      spath = '../skeletons/bootstrap3'
-      @template "#{spath}/_bower.json", 'bower.json'
-      @template "#{spath}/app/assets/_index.hbs", 'app/assets/index.hbs'
-      @copy "#{spath}/Gruntfile.coffee", 'Gruntfile.coffee'
-      @template "#{spath}/app/_initialize.coffee", 'app/initialize.coffee'
-      @copy "#{spath}/app/application.coffee", 'app/application.coffee'
-      @copy "#{spath}/app/mediator.coffee", 'app/mediator.coffee'
-      @copy "#{spath}/app/routes.coffee", 'app/routes.coffee'
-      @copy "#{spath}/app/controllers/_home.coffee", "app/controllers/home#{@controllerSuffix}.coffee"
-      @copy "#{spath}/app/styles/application.styl", 'app/styles/application.styl'
-      @copy "#{spath}/app/styles/base.styl", 'app/styles/base.styl'
-      @copy "#{spath}/app/styles/modules/footer.styl", 'app/styles/modules/footer.styl'
-      @copy "#{spath}/app/templates/footer.hbs", 'app/templates/footer.hbs'
-      @copy "#{spath}/app/templates/header.hbs", 'app/templates/header.hbs'
-      @copy "#{spath}/app/templates/home.hbs", 'app/templates/home.hbs'
-      @copy "#{spath}/app/templates/jumbotron.hbs", 'app/templates/jumbotron.hbs'
-      @copy "#{spath}/app/templates/site.hbs", 'app/templates/site.hbs'
-      @copy "#{spath}/app/views/bootstrap/jumbotron.coffee", 'app/views/bootstrap/jumbotron.coffee'
-      @copy "#{spath}/app/views/footer.coffee", 'app/views/footer.coffee'
-      @copy "#{spath}/app/views/header.coffee", 'app/views/header.coffee'
-      @copy "#{spath}/app/views/home/home-page.coffee", 'app/views/home/home-page.coffee'
-      @copy "#{spath}/app/views/site-view.coffee", 'app/views/site-view.coffee'
 
-      glob.sync("#{__dirname}/templates/app/**/*")
+      @copy 'server.coffee', 'server.coffee'
+
+      glob.sync("#{__dirname}/**/*")
       .map (file) ->
-        path.resolve file
+        file = path.resolve file
+      .filter (file) ->
+        basename = path.basename(file)
+        fs.statSync(file).isFile() and basename isnt 'index.coffee' and basename isnt 'index.js'
       .forEach (file) =>
-        if fs.statSync(file).isFile() and not file.match /^_/
-          file = file.replace "#{__dirname}/templates/", ''
-          @copy file, file
+        dest = getDest file
+        method = if isTemplate(file) then 'template' else 'copy'
+
+        @[method] file, dest
